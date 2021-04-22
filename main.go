@@ -17,6 +17,9 @@ var (
 )
 
 func main() {
+
+	checkEnv()
+
 	r := mux.NewRouter()
 
 	ctx := context.Background()
@@ -29,4 +32,10 @@ func main() {
 
 	log.Println("Listening in port", port)
 	log.Fatal(http.ListenAndServe(port, r))
+}
+
+func checkEnv() {
+	if len(port) == 0 || len(secret) == 0 {
+		panic("Missing env variables , check TOKEN_TEST_SECRET and TOKEN_TEST_PORT")
+	}
 }
