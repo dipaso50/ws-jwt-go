@@ -1,5 +1,6 @@
 exeName=jwtExample
 sourceName=main.go
+dockerImageTag=jws-go-img
 
 all: compileLinux compileWindows
 
@@ -21,6 +22,12 @@ ifdef tagv
 else
 	@echo 'tagv not defined'
 endif
+
+dockerRun:
+	docker run --env-file env.list --rm -it -p 9000:9000  $(dockerImageTag) 
+
+dockerBuild:
+	docker build -t $(dockerImageTag) .
 
 clean:
 	rm -f bin/linux/$(exeName) ; rm -f bin/windows/$(exeName).exe ; rm -rf bin/release
